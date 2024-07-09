@@ -1,0 +1,8 @@
+                                 
+AC                AC AC          
+ACACAC     ACAC   AC AC   ACAC   
+AC    AC ACACACAC AC AC AC    AC 
+AC    AC AC       AC AC AC    AC 
+AC    AC   ACACA  AC AC   ACAC   
+                                 
+                                 
