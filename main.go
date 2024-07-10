@@ -138,7 +138,7 @@ func main() {
 
 			m := asciiArt.AsciiArt(string(s))
 			res := asciiArt.Tab(os.Args[1])
-			result := asciiArt.Paragraph(res, m)
+			result := string(asciiArt.Paragraph(res, m))
 			err = os.WriteFile(output, result, 0o644)
 			if err != nil {
 				fmt.Println("Error:")
