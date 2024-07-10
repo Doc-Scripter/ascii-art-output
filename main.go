@@ -3,12 +3,11 @@ package main
 import (
 	"crypto/sha256"
 	"flag"
-
-	
 	"fmt"
 	"io"
 	"log"
 	"os"
+	"strings"
 
 	asciiArt "ascii/functions"
 )
@@ -16,6 +15,7 @@ import (
 func main() {
 	var output string
 	flag.StringVar(&output, "output", "", "store output of ascii art to a file.")
+	flag.Parse()
 	args := len(os.Args)
 	if args <= 2 || args > 4 {
 		fmt.Println("Usage: go run . [STRING] [BANNER]\n\nEX: go run . something standard")
@@ -35,29 +35,7 @@ func main() {
 				fmt.Print("Unable to read file.")
 				return
 			}
-			file := os.Args[2]
-
-			banners := []string{"standard", "thinkertoy", "shadow"}
-			for i := range banners {
-				if file != banners[i] && i == len(banners)-1 {
-					fmt.Println("Usage: go run . [STRING] [BANNER]\n\nEX: go run . something standard")
-					return
-				} else if file == banners[i] {
-					break
-				}
-			}
-			switch file {
-			case "standard":
-				file = "resources/standard.txt"
-			case "thinkertoy":
-				file = "resources/thinkertoy.txt"
-			case "shadow":
-				file = "resources/shadow.txt"
-			case "ac":
-				file = "resources/ac.txt"
-			default:
-				file = "resources/standard.txt"
-			}
+			
 
 			h := sha256.New()
 			if _, err := io.Copy(h, f); err != nil {
@@ -67,21 +45,21 @@ func main() {
 
 			if checkSum != standardCheckSum {
 				fmt.Println("File contents have been corrupted. Redownloading the banner file")
-				asciiArt.Checkfiles(file)
+				asciiArt.Checkfiles("resources/standard.txt")
 				return
 			}
 
-			s, err := os.ReadFile(file)
+			s, err := os.ReadFile("resources/standard.txt")
 			if err != nil {
 				fmt.Println("File not found")
 				return
 			}
 
 			m := asciiArt.AsciiArt(string(s))
-			res := asciiArt.Tab(os.Args[1])
+			res := asciiArt.Tab(os.Args[2])
 			result := asciiArt.Paragraph(res, m)
 
-			err = os.WriteFile(output, result, 0o644)
+			err = os.WriteFile(output, []byte(strings.Join(result, "")), 0o644)
 			if err != nil {
 				fmt.Println("Error: Problem during writing.")
 			}
@@ -138,8 +116,8 @@ func main() {
 
 			m := asciiArt.AsciiArt(string(s))
 			res := asciiArt.Tab(os.Args[1])
-			result := string(asciiArt.Paragraph(res, m))
-			err = os.WriteFile(output, result, 0o644)
+			result := (asciiArt.Paragraph(res, m))
+			err = os.WriteFile(output, []byte(strings.Join(result, "")), 0o644)
 			if err != nil {
 				fmt.Println("Error:")
 			}
@@ -203,7 +181,7 @@ func main() {
 				m := asciiArt.AsciiArt(string(s))
 				res := asciiArt.Tab(os.Args[1])
 				result := asciiArt.Paragraph(res, m)
-				err = os.WriteFile(output, result, 0o644)
+				err = os.WriteFile(output, []byte(strings.Join(result, "")), 0o644)
 				if err != nil {
 					panic(err)
 				}

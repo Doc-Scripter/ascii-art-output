@@ -1,27 +1,25 @@
 package ascii
 
 import (
-	"fmt"
 	"strings"
 )
 
 // Paragraph splits input paragraph into lines and prints the ascii art of each line
-func Paragraph(sent string, m map[rune][]string) {
-	if sent == "" {
-		return
+func Paragraph(input string, asciiMap map[rune][]string) []string {
+	if input == "" {
+		return []string{}
 	}
-	sent = strings.Replace(sent, "\n", "\\n", -1)
+	input = strings.Replace(input, "\n", "\\n", -1)
+	var ToColor []string
 
-	i := 0
-	c := strings.Split(sent, "\\n")
-	for _, line := range c {
-		if line == "" {
-			i++
-			if i < len(c) {
-				fmt.Println()
-			}
+	words := strings.Split(input, "\\n")
+	for i, v := range words {
+		if words[i] == "" {
+			continue
 		} else {
-			Art(line, m)
+			ascii := Art(v, asciiMap)
+			ToColor = append(ToColor, ascii)
 		}
 	}
+	return ToColor
 }
