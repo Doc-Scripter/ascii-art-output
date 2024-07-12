@@ -5,7 +5,8 @@ import (
 
 	asciiArt "ascii/functions"
 )
-//handles receiving and redirecting  command line inputs
+
+// handles receiving and redirecting  command line inputs
 func main() {
 	args := os.Args
 
