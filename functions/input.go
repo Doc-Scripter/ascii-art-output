@@ -15,7 +15,6 @@ func Input(s []string) {
 	flag.StringVar(&output, "output", "", "store output of ascii art to a file.")
 	flag.Parse()
 	args := len(s)
-	
 
 	if args < 2 || args > 4 {
 		fmt.Println("Usage: go run . [OPTION] [STRING] [BANNER] \n\nEX: go run . --output=<fileName.txt> something standard")
