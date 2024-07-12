@@ -100,14 +100,73 @@ func main() {
 			}
 
 		} else {
-			fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --output=<fileName.txt> something")
+			if strings.Contains(os.Args[1], "--output=") && output == "" {
+				fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --output=<fileName.txt> something")
+				return
+			}
+			banner := os.Args[2]
+			banners := []string{"standard", "thinkertoy", "shadow"}
+			for i := range banners {
+				if banner != banners[i] && i == len(banners)-1 {
+					fmt.Println("Usage: go run . [STRING] [BANNER] \n\nEX: go run .  something standard")
+					return
+				} else if banner == banners[i] {
+					break
+				}
+			}
+			switch banner {
+			case "standard":
+				banner = "resources/standard.txt"
+			case "thinkertoy":
+				banner = "resources/thinkertoy.txt"
+			case "shadow":
+				banner = "resources/shadow.txt"
+			case "ac":
+				banner = "resources/ac.txt"
+			default:
+				banner = "resources/standard.txt"
+			}
+
+			f, err := os.Open(banner)
+			if err != nil {
+				fmt.Print("Unable to read file.")
+				return
+			}
+			defer f.Close()
+
+			h := sha256.New()
+			if _, err := io.Copy(h, f); err != nil {
+				log.Fatal(err)
+			}
+			checkSum := string(fmt.Sprintf("%x", h.Sum(nil)))
+
+			if checkSum != standardCheckSum && checkSum != thinkertoyCheckSum && checkSum != shadowCheckSum {
+				fmt.Println("File contents have been corrupted. Redownloading the banner file")
+				asciiArt.Checkfiles(banner)
+				return
+			}
+
+			s, err := os.ReadFile(banner)
+			if err != nil {
+				fmt.Println("File not found")
+				return
+			}
+
+			mapped := asciiArt.AsciiArt(string(s))
+			tab := asciiArt.Tab(os.Args[1])
+			word := asciiArt.Paragraph(tab, mapped)
+			fmt.Print(strings.Join(word, ""))
 			return
 		}
 	}
 
 	if len(os.Args) == 4 {
 		if output != "" {
-			// output := os.Args[1]
+			if output == ".txt" {
+				fmt.Println("Usage: go run . [OPTION] [STRING] [BANNER] \n\nEX: go run . --output=<fileName.txt> something standard")
+				return
+			}
+
 			banner := os.Args[3]
 
 			banners := []string{"standard", "thinkertoy", "shadow"}
@@ -158,13 +217,18 @@ func main() {
 			}
 
 			m := asciiArt.AsciiArt(string(s))
-			res := asciiArt.Tab(os.Args[1])
+			res := asciiArt.Tab(os.Args[2])
 			result := asciiArt.Paragraph(res, m)
 			err = os.WriteFile(output, []byte(strings.Join(result, "")), 0o644)
 			if err != nil {
 				panic(err)
 			}
 
+		} else {
+			if output == "" || output == ".txt" {
+				fmt.Println("Usage: go run . [OPTION] [STRING] [BANNER] \n\nEX: go run . --output=<fileName.txt> something standard")
+				return
+			}
 		}
 	}
 }
