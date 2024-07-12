@@ -5,7 +5,7 @@ import (
 )
 
 // asciiArt maps characters to their respective Ascii art 8 lines long.
-func AsciiArt(s string) map[rune][]string {
+func AsciiArtMap(s string) map[rune][]string {
 	wordArt := strings.Split(string(s), "\n")
 	char := ' '
 	m := make(map[rune][]string)

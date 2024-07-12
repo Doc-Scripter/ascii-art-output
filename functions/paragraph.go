@@ -4,22 +4,22 @@ import (
 	"strings"
 )
 
-// Paragraph splits input paragraph into lines and prints the ascii art of each line
-func Paragraph(input string, asciiMap map[rune][]string) []string {
+// Handles newlines aspect in input string,combines all input slices' asciiArt
+func AsciiCombine(input string, asciiMap map[rune][]string) []string {
 	if input == "" {
 		return []string{}
 	}
 	input = strings.Replace(input, "\n", "\\n", -1)
-	var ToColor []string
+	var result []string
 
 	words := strings.Split(input, "\\n")
-	for i, v := range words {
+	for i, char := range words {
 		if words[i] == "" {
 			continue
 		} else {
-			ascii := Art(v, asciiMap)
-			ToColor = append(ToColor, ascii)
+			ascii := Art(char, asciiMap)
+			result = append(result, ascii)
 		}
 	}
-	return ToColor
+	return result
 }

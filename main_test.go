@@ -23,7 +23,7 @@ func TestParagraph(t *testing.T) {
 			os.Stdout = w
 			s, _ := os.ReadFile("resources/standard.txt")
 
-			m := a.AsciiArt(string(s))
+			m := a.AsciiArtMap(string(s))
 			a.Art("hello", m)
 			w.Close()
 			os.Stdout = old
@@ -63,7 +63,7 @@ func TestParagraph1(t *testing.T) {
 			os.Stdout = w
 			s, _ := os.ReadFile("resources/shadow.txt")
 
-			m := a.AsciiArt(string(s))
+			m := a.AsciiArtMap(string(s))
 			a.Art("hello there", m)
 			w.Close()
 			os.Stdout = old
@@ -103,7 +103,7 @@ func TestParagraph2(t *testing.T) {
 			os.Stdout = w
 			s, _ := os.ReadFile("resources/thinkertoy.txt")
 
-			m := a.AsciiArt(string(s))
+			m := a.AsciiArtMap(string(s))
 			a.Art("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz!@#$%^&*()_+=<>?", m)
 			w.Close()
 			os.Stdout = old
@@ -143,7 +143,7 @@ func TestParagraph3(t *testing.T) {
 			os.Stdout = w
 			s, _ := os.ReadFile("resources/ac.txt")
 
-			m := a.AsciiArt(string(s))
+			m := a.AsciiArtMap(string(s))
 			a.Art("hello", m)
 			w.Close()
 			os.Stdout = old

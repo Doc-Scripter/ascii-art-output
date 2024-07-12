@@ -5,22 +5,22 @@ import (
 	"os"
 )
 
-// Art prints a line of Ascii art as per the input word and mapping of m
+// combiness the line of Ascii art per slices of the input string and predefined mapping
 func Art(text string, m map[rune][]string) string {
-	s := ""
-	// ranges through the 8 lines which contain aspects of the ascii art
-	for b := 0; b < 8; b++ {
-		// ranges through the text that should be rep in ascii art
-		for _, value := range text {
-			graphics, ok := m[value]
+	str := ""
+	// ranges through the 8 lines of the ascii art
+	for i := 0; i < 8; i++ {
+		// ranges through the characters in input text adding them line by line
+		for _, char := range text {
+			asciiArt, ok := m[char]
 			if !ok {
 				fmt.Println("Ascii art not contained in file")
 				os.Exit(0)
 			}
-			s += graphics[b]
+			str += asciiArt[i]
 		}
-		s += "\n"
+		str += "\n"
+
 	}
-	// prints the ascii art of the string
-	return s
+	return str
 }
