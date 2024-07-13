@@ -63,6 +63,10 @@ func Input(input []string) {
 
 	if args == 3 {
 		if output != "" {
+			if !strings.HasSuffix(os.Args[1], ".txt"){
+				fmt.Println("Usage: go run . [OPTION] [STRING] [BANNER] \n\nEX: go run . --output=<fileName.txt> something standard")
+				return
+			}
 			if output == ".txt" {
 				fmt.Println("Usage: go run . [OPTION] [STRING] [BANNER] \n\nEX: go run . --output=<fileName.txt> something standard")
 				return
@@ -163,6 +167,10 @@ func Input(input []string) {
 	}
 
 	if len(os.Args) == 4 {
+		if !strings.HasSuffix(os.Args[1], ".txt"){
+			fmt.Println("Usage: go run . [OPTION] [STRING] [BANNER] \n\nEX: go run . --output=<fileName.txt> something standard")
+			return
+		}
 		if output != "" {
 			if output == ".txt" {
 				fmt.Println("Usage: go run . [OPTION] [STRING] [BANNER] \n\nEX: go run . --output=<fileName.txt> something standard")
