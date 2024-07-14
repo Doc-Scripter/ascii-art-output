@@ -127,7 +127,7 @@ Example:
 go run . "Test run" thinkertoy
 ```
 Output:
-```bash
+```bash 
                                       
 o-O-o          o                      
   |            |                      
